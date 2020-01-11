@@ -25,8 +25,9 @@ export class JServiceService {
   }
 
   getCategory(id: number) {
-    let params = new HttpParams();
-    params = params.append('id', id.toString());
-    return this.http.get(this.jServiceUrl + '/category', { params: params });
+    return this.http.get(this.jServiceUrl + '/category', {
+      params: new HttpParams()
+        .set('id', id.toString())
+    });
   }
 }

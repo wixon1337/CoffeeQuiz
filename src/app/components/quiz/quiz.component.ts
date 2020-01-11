@@ -14,7 +14,7 @@ export class QuizComponent implements OnInit {
     //this.jService.getClues().subscribe(data => console.log(data));
     this.jService.getRandom().subscribe(data => console.log(data));
     //this.jService.getCategories().subscribe(data => console.log(data));
-    //this.jService.getCategory(1).subscribe(data => console.log(data));
+    this.jService.getCategory(1).subscribe(data => console.log(data));
   }
 
 }
