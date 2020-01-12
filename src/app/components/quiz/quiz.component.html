@@ -1,6 +1,8 @@
-<p>Question: {{ question }}</p>
-<p>Answer: {{ answer }}</p>
-<p>AirDate: {{ airdate }} </p>
-<p>id: {{ id }}</p>
-<p>value: {{ value }}</p>
-<p>category: {{ category }}</p>
+<div *ngIf="clue">
+    <p>Question: {{ clue.question }}</p>
+    <p>Answer: {{ clue.answer }}</p>
+    <p>AirDate: {{ clue.airdate }} </p>
+    <p>id: {{ clue.id }}</p>
+    <p>value: {{ clue.value }}</p>
+    <p>category: {{ clue.category.title }}</p>
+</div>
