@@ -17,7 +17,11 @@
         Time: {{ time }}s
     </div>
     <div class="category">
-        Category
+        Category:
+        <select [(ngModel)]="selectedCategory">
+            <option [value]="null">None</option>
+            <option [value]="category.id" *ngFor="let category of categories">{{ category.title }}</option>
+        </select>
     </div>
 </div>
 

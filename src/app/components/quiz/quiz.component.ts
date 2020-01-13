@@ -16,6 +16,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   answer: string;
   time: number = 60;
   newTimer: number;
+  categories;
+  selectedCategory;
   interval;
   showAnswer: boolean = false;
   private _unsubscribe$ = new Subject<void>();
@@ -23,10 +25,11 @@ export class QuizComponent implements OnInit, OnDestroy {
   constructor(private jService: JServiceService) { }
 
   ngOnInit() {
-    //this.jService.getClues().subscribe(data => console.log(data));
+    this.jService.getCategories().subscribe(data => {
+      console.log(data);
+      this.categories = data;
+    });
     this.newClue();
-    //this.jService.getCategories().subscribe(data => console.log(data));
-    // this.jService.getCategory(1).subscribe(data => console.log(data));
   }
 
   ngOnDestroy(): void {
@@ -41,8 +44,18 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   newClue(): void {
     this.changeTimer();
+    if (this.selectedCategory !== "null" && this.selectedCategory !== undefined) {
+      this.getClueFromSelectedCategory(this.selectedCategory);
+    } else {
+      console.log("random")
+      this.getRandomClue();
+    }
+    this.showAnswer = false;
+    console.log("selected cat: " + this.selectedCategory)
+  }
+
+  getRandomClue(): void {
     this.jService.getRandom().pipe(takeUntil(this._unsubscribe$)).subscribe(data => {
-      console.log(data)
       this.newData = data;
       this.clue = new Clue(
         this.newData[0].id,
@@ -53,7 +66,24 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.newData[0].value
       )
     });
-    this.showAnswer = false;
+  }
+
+  getClueFromSelectedCategory(categoryId: number): void {
+    this.jService.getCategory(categoryId).pipe(takeUntil(this._unsubscribe$)).subscribe(data => {
+      this.newData = data;
+      console.log(data);
+      let clues = this.newData.clues;
+      console.log(clues);
+      let randomClueIndex = Math.floor(Math.random() * clues.length);
+      this.clue = new Clue(
+        this.newData.clues[randomClueIndex].id,
+        this.newData.clues[randomClueIndex].question,
+        this.newData.clues[randomClueIndex].answer,
+        this.airdateFormat(this.newData.clues[randomClueIndex].airdate),
+        new Category(this.newData.id, this.newData.title),
+        this.newData.clues[randomClueIndex].value
+      )
+    })
   }
 
   submit(): void {

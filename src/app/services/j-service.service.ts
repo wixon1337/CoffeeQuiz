@@ -20,8 +20,11 @@ export class JServiceService {
     });
   }
 
-  getCategories() {
-    return this.http.get(this.jServiceUrl + '/categories');
+  getCategories(count: number = 100) {
+    return this.http.get(this.jServiceUrl + '/categories', {
+      params: new HttpParams()
+        .set('count', count.toString())
+    });
   }
 
   getCategory(id: number) {
