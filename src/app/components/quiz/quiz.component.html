@@ -1,8 +1,33 @@
-<div *ngIf="clue">
+<!-- <div *ngIf="clue">
     <p>Question: {{ clue.question }}</p>
     <p>Answer: {{ clue.answer }}</p>
     <p>AirDate: {{ clue.airdate }} </p>
     <p>id: {{ clue.id }}</p>
     <p>value: {{ clue.value }}</p>
     <p>category: {{ clue.category.title }}</p>
+</div> -->
+
+<div class="container" *ngIf="clue">
+    <div class="row">
+        <div class="col-sm">
+            ID: {{ clue.id }}
+        </div>
+        <div class="col-sm">
+            Category: {{ clue.category.title }}
+        </div>
+        <div class="col-sm">
+            {{ clue.airdate }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="question col-sm">Question: {{ clue.question }}</div>
+    </div>
+    <div class="row">
+        <div class="col-sm">Value: {{ clue.value }} </div>
+        <div class="col-sm">Answer: {{ clue.answer }} </div>
+    </div>
+</div>
+<div class=" buttondiv">
+    <button type="button" class="btn btn-primary" (click)="newClue()">New clue</button>
+    <button type="button" class="btn btn-primary">Submit</button>
 </div>

@@ -4,7 +4,7 @@ import { QuizComponent } from './components/quiz/quiz.component';
 
 
 const routes: Routes = [
-  { path: '', component: QuizComponent }
+  { path: 'random', component: QuizComponent }
 ];
 
 @NgModule({

@@ -19,18 +19,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //this.jService.getClues().subscribe(data => console.log(data));
-    this.jService.getRandom().pipe(takeUntil(this._unsubscribe$)).subscribe(data => {
-      console.log(data)
-      this.newData = data;
-      this.clue = new Clue(
-        this.newData[0].id,
-        this.newData[0].question,
-        this.newData[0].answer,
-        this.airdateFormat(this.newData[0].airdate),
-        new Category(this.newData[0].category.id, this.newData[0].category.title),
-        this.newData[0].value
-      )
-    });
+    this.newClue();
     //this.jService.getCategories().subscribe(data => console.log(data));
     // this.jService.getCategory(1).subscribe(data => console.log(data));
   }
@@ -43,6 +32,21 @@ export class QuizComponent implements OnInit, OnDestroy {
   airdateFormat(airdate: string): string {
     let airdateArray = airdate.split('T');
     return airdateArray[0];
+  }
+
+  newClue(): void {
+    this.jService.getRandom().pipe(takeUntil(this._unsubscribe$)).subscribe(data => {
+      console.log(data)
+      this.newData = data;
+      this.clue = new Clue(
+        this.newData[0].id,
+        this.newData[0].question,
+        this.newData[0].answer,
+        this.airdateFormat(this.newData[0].airdate),
+        new Category(this.newData[0].category.id, this.newData[0].category.title),
+        this.newData[0].value
+      )
+    });
   }
 
 }
