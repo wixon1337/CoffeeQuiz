@@ -30,6 +30,12 @@
     border-color: var(--main-bg-color);
 }
 
+.answer, .category, .timer {
+    margin-left: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .buttondiv {
     margin-top: 2rem;
     margin-right: 5rem;
@@ -37,6 +43,9 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .answer, .category, .timer {
+        margin-left: 0rem;
+    }
     .buttondiv {
         margin-right: 0rem;
     }

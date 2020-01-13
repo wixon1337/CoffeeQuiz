@@ -13,6 +13,11 @@ import { takeUntil, take } from 'rxjs/operators';
 export class QuizComponent implements OnInit, OnDestroy {
   newData;
   clue: Clue;
+  answer: string;
+  time: number = 60;
+  newTimer: number;
+  interval;
+  showAnswer: boolean = false;
   private _unsubscribe$ = new Subject<void>();
 
   constructor(private jService: JServiceService) { }
@@ -35,6 +40,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   newClue(): void {
+    this.changeTimer();
     this.jService.getRandom().pipe(takeUntil(this._unsubscribe$)).subscribe(data => {
       console.log(data)
       this.newData = data;
@@ -47,6 +53,42 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.newData[0].value
       )
     });
+    this.showAnswer = false;
   }
 
+  submit(): void {
+    if (this.answer && this.validation(this.answer) === this.validation(this.clue.answer)) {
+      alert("Correct answer!");
+    } else {
+      alert("Wrong answer!");
+    }
+    this.showAnswer = true;
+  }
+
+  validation(inputString: string): string {
+    return inputString.replace(/\s/g, '').toLowerCase().replace(/\"/g, '');
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.time--;
+      if (this.time === 0) {
+        alert("Times up!");
+        this.pauseTimer();
+        this.showAnswer = true;
+      }
+    }, 1000)
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
+
+  changeTimer() {
+    this.pauseTimer();
+    if (this.newTimer) {
+      this.time = this.newTimer;
+    }
+    this.startTimer();
+  }
 }

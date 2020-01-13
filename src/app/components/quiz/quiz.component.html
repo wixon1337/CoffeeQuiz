@@ -7,6 +7,20 @@
     <p>category: {{ clue.category.title }}</p>
 </div> -->
 
+<div>
+    <div class="timer">
+        Timer:
+        <input type="number" name="timer" id="timer" [(ngModel)]="newTimer">
+        <button type="button" class="btn btn-primary" (click)="changeTimer()">Change
+            Timer</button>
+        <br>
+        Time: {{ time }}s
+    </div>
+    <div class="category">
+        Category
+    </div>
+</div>
+
 <div class="container" *ngIf="clue">
     <div class="row">
         <div class="col-sm">
@@ -24,10 +38,14 @@
     </div>
     <div class="row">
         <div class="col-sm">Value: {{ clue.value }} </div>
-        <div class="col-sm">Answer: {{ clue.answer }} </div>
+        <div class="col-sm" *ngIf="showAnswer">Correct answer: {{ clue.answer }} </div>
     </div>
+</div>
+<div class="answer">
+    Answer:
+    <input type="text" name="answer" id="answer" [(ngModel)]="answer">
 </div>
 <div class=" buttondiv">
     <button type="button" class="btn btn-primary" (click)="newClue()">New clue</button>
-    <button type="button" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-primary" (click)="submit()" [disabled]="showAnswer">Submit</button>
 </div>
