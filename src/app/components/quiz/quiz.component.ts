@@ -26,7 +26,6 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.jService.getCategories().subscribe(data => {
-      console.log(data);
       this.categories = data;
     });
     this.newClue();
@@ -47,11 +46,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (this.selectedCategory !== "null" && this.selectedCategory !== undefined) {
       this.getClueFromSelectedCategory(this.selectedCategory);
     } else {
-      console.log("random")
       this.getRandomClue();
     }
     this.showAnswer = false;
-    console.log("selected cat: " + this.selectedCategory)
   }
 
   getRandomClue(): void {
@@ -71,9 +68,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   getClueFromSelectedCategory(categoryId: number): void {
     this.jService.getCategory(categoryId).pipe(takeUntil(this._unsubscribe$)).subscribe(data => {
       this.newData = data;
-      console.log(data);
       let clues = this.newData.clues;
-      console.log(clues);
       let randomClueIndex = Math.floor(Math.random() * clues.length);
       this.clue = new Clue(
         this.newData.clues[randomClueIndex].id,
